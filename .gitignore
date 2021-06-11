@@ -1,0 +1,16 @@
+### MacOS ###
+.DS_Store
+
+### Eclipse ###
+.project
+.settings
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+### NPM ###
+**/node_modules/
+**/package-lock.json
