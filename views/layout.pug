@@ -1,13 +1,28 @@
 block variables
 doctype html
 html
-  head
-    meta(charset="utf-8")
-    link(rel="shortcut icon", href="/favicon.ico")
-    meta(name="viewport", content="width=device-width, initial-scale=1, shrink-to-fit=no")
-    meta(name="theme-color", content="#000000")
-    title #{title} | RelApp
-    link(rel="stylesheet" href="/style.css")
-  body
-    div#root
-      block layout-content
+	head
+		meta(charset="utf-8")
+		link(rel="shortcut icon", href="/favicon.ico")
+		meta(name="viewport", content="width=device-width, initial-scale=1, shrink-to-fit=no")
+		meta(name="theme-color", content="#000000")
+		title #{title} | Breath
+		link(rel="stylesheet" href="/style.css")
+		script(src="/main.js")
+	body
+		div#header
+			div#menubar
+				div#logo The Breath App
+				div#menu
+					a(href="/") Home
+					span |
+					a(href="/contact") Contact
+			hr
+
+		div#root
+			block layout-content
+
+		div#footer
+			hr
+			p BERRY Matthew, MENDES Hudson, SYKES Ruth, TOTH Balazs
+			p Agile Software Project, University of London, 2021 

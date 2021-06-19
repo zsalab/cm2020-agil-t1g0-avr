@@ -6,13 +6,13 @@
 
 `docker build . -t cm2020-agil-t1g0-avr/breath-app`
 
-`docker run -p 18080:8080 -d cm2020-agil-t1g0-avr/breath-app`
+`docker run -p 8000:8000 -d cm2020-agil-t1g0-avr/breath-app`
 
 or
 
 `docker-compose up --build` (you may remove the existing image/container first: `docker container rm -f breath_app`)
 
-Visit: [http://127.0.0.1:18080|http://127.0.0.1:18080] in your browser
+Visit: [http://127.0.0.1:8000|http://127.0.0.1:8000] in your browser
 
 ### Without docker
 
@@ -28,8 +28,8 @@ Run in separate terminal to start the app
 
 `npm run ui`
 
-Open http://localhost:8081 in your browser (if the last command have not opened or you accidentaly closed) if you using the auto reload
-otherwise open http://localhost:8080
+Open http://localhost:8001 in your browser (if the last command have not opened or you accidentally closed) if you using the auto reload
+otherwise open http://localhost:8001
 
 ## Developer info
 
