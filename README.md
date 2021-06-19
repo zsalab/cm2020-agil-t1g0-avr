@@ -8,6 +8,10 @@
 
 `docker run -p 18080:8080 -d cm2020-agil-t1g0-avr/breath-app`
 
+or
+
+`docker-compose up --build` (you may remove the existing image/container first: `docker container rm -f breath_app`)
+
 Visit: [http://127.0.0.1:18080|http://127.0.0.1:18080] in your browser
 
 ### Without docker
