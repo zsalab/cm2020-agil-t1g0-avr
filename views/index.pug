@@ -1,7 +1,13 @@
 extends layout
 
+block head-content
+	script(src="https://cdn.jsdelivr.net/npm/p5@1.4.0/lib/p5.js")
+	script(src="/breaths/1/animation")
+
 block layout-content
 	div#excercise
 		h1 #{breath.title}
-		img(src=breath.image)
+		img(src=breath.image,height=100)
 		div(onClick="startAnimation(10)")#animation START
+		<main></main>
+	
