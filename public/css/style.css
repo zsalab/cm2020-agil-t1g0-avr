@@ -1,0 +1,29 @@
+html, body, #main {
+    height: 100%;
+}
+
+html { 
+    background: url(../lnf/look-feel-1/sean-oulashin-KMn4VEeEPR8-unsplash.jpeg) no-repeat center center fixed; 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+body {
+    min-height: 100vh;
+    height: 100%;
+    margin: 0px;
+    padding: 0px;
+}
+
+#main {	
+	display: flex; /* or inline-flex */
+	flex-direction: column;
+    justify-content: space-around;
+    height: 100%;
+}
+
+#main > div {
+    text-align: center;
+}

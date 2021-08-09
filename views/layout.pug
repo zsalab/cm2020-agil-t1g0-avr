@@ -5,25 +5,22 @@ html
 		meta(charset="utf-8")
 		link(rel="shortcut icon", href="/favicon.ico")
 		meta(name="viewport", content="width=device-width, initial-scale=1, shrink-to-fit=no")
-		meta(name="theme-color", content="#000000")
 		title #{title} | Breath
-		link(rel="stylesheet" href="/style.css")
-		script(src="/main.js")
+		link(rel="preconnect" href="https://fonts.googleapis.com")
+		link(rel="preconnect" href="https://fonts.gstatic.com" crossorigin)
+		link(rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sarina&display=swap")
+		link(rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Varela+Round&display=swap")
+		link(rel="stylesheet" href="css/style.css")
+		block specific-style
 		include heatmap
 	body
-		div#header
-			div#menubar
-				div#logo The Breath App
-				div#menu
-					a(href="/") Home
-					span |
-					a(href="/contact") Contact
-			hr
+		div#main
+			div#header
+			
+			div#inner
+				block layout-content
 
-		div#root
-			block layout-content
-
-		div#footer
-			hr
-			p BERRY Matthew, MENDES Hudson, SYKES Ruth, TOTH Balazs
-			p Agile Software Project, University of London, 2021 
+			div#footer
+				hr
+				p BERRY Matthew, MENDES Hudson, SYKES Ruth, TOTH Balazs
+				p Agile Software Project, University of London, 2021 

@@ -1,7 +1,9 @@
 extends layout
 
+block specific-style
+	link(rel="stylesheet" href="css/index.css")
+
 block layout-content
-	div#excercise
-		h1 #{breath.title}
-		img(src=breath.image)
-		div(onClick="startAnimation(10)")#animation START
+	a.btn-breath
+		img(src="img/logo-chakra.png" alt="chakra")
+		span Start
