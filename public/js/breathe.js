@@ -1,6 +1,6 @@
 var chakraImage;
 var chakraProportion = 0.8;
-var start = false;
+var running = false;
 
 var diameter = 0;
 var currentDiameter = 0;
@@ -25,18 +25,15 @@ function draw() {
     clear();
     noStroke();
 
-    if (start) {
-        gradient()
-        chakra();
+    drawGradient()
+    drawChakra();
+    drawText();
+
+    if (running)
         breathe();
-    }
-    else {
-        gradient()
-        chakra();
-    }
 }
 
-function gradient() {
+function drawGradient() {
     for (var r = 0; r < currentDiameter; ++r) {
         var alphaFactor = 1.0 - (r / diameter);
         fill(157, 183, 184, alphaFactor * 255.0);
@@ -44,13 +41,31 @@ function gradient() {
     }
 }
 
-function chakra() {
+function drawChakra() {
     tint(255, 63);
     var width = diameter * chakraProportion;
     var height = diameter * chakraProportion;
     var x = (diameter - width) / 2;
     var y = (diameter - height) / 2;
     image(chakraImage, x, y, width, height)
+}
+
+function drawText() {
+    textFont(sarinaFont);
+    textAlign(CENTER, CENTER);
+    noStroke();
+    fill(255, 255, 255);
+    if (!running) {
+        textSize(32);
+        text('Start', diameter / 2, diameter / 2)
+    }
+    else {
+        textSize(24);
+        if (breathingIn)
+            text('breath in', diameter / 2, diameter / 2)
+        else
+            text('breath out', diameter / 2, diameter / 2)
+    }
 }
 
 function breathe() {
@@ -68,5 +83,6 @@ function breathe() {
 }
 
 document.getElementById('breathe').addEventListener('click', function () {
-    start = true;
+    running = true;
+    currentDiameter = diameter * minDiameterProportion;
 })
