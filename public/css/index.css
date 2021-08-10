@@ -9,21 +9,9 @@ button#breathe {
     cursor: pointer;
 }
 
-button#breathe span {
-    display: block;
-    position: absolute;
-    margin-top: 6rem;
-    width: 15rem;
-    font-family: 'Sarina', cursive;
-    font-size: 2.5rem;
-    color: #fff;
-    text-shadow: 1px 1px #393c33;
-}
-
-button#breathe img {
-    width: 100%;
-    height: 100%;
-    opacity: 0.4;
+button#breathe canvas {
+    position: relative;
+    z-index: 0;
 }
 
 /* EXPLANATION ========================================================== */
