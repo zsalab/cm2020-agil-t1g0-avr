@@ -1,13 +1,17 @@
 extends layout
 
-block head-content
-	script(src="https://cdn.jsdelivr.net/npm/p5@1.4.0/lib/p5.js")
-	script(src="/breaths/1/animation")
+block specific-style
+	link(rel="stylesheet" href="css/index.css")
 
-block layout-content
-	div#excercise
-		h1 #{breath.title}
-		img(src=breath.image,height=100)
-		div(onClick="startAnimation(10)")#animation START
-		<main></main>
-	
+block non-obtrusive-js
+	script(type="text/javascript" src="js/breathe.js")
+
+block inner-body
+	button#breathe
+
+block lower-header
+	section#explanation 
+		header Clarity. Peace. Serenity. 
+		p
+			| Invest in yourself for as little as 60 seconds of your time and take a moment away from the hustle and bustle of everyday life.<br />
+			| Click on <em>Start</em>, follow the animation, and take a breath.

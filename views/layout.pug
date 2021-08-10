@@ -5,26 +5,32 @@ html
 		meta(charset="utf-8")
 		link(rel="shortcut icon", href="/favicon.ico")
 		meta(name="viewport", content="width=device-width, initial-scale=1, shrink-to-fit=no")
-		meta(name="theme-color", content="#000000")
 		title #{title} | Breath
-		link(rel="stylesheet" href="/style.css")
-		script(src="/main.js")
+		link(rel="preconnect" href="https://fonts.googleapis.com")
+		link(rel="preconnect" href="https://fonts.gstatic.com" crossorigin)
+		link(rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sarina&display=swap")
+		link(rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Varela+Round&display=swap")
+		link(rel="stylesheet" href="css/reset.css")
+		link(rel="stylesheet" href="css/style.css")
+		script(src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js")
+		block specific-style
 		include heatmap
 		block head-content
 	body
-		div#header
-			div#menubar
-				div#logo The Breath App
-				div#menu
-					a(href="/") Home
-					span |
-					a(href="/contact") Contact
-			hr
+		#main 
+			#header
+				h1
+					img(src="img/logo-chakra.png" alt="a chakra picture resembling a flower")
+					| Breath
+			
+			#inner
+				block inner-body
 
-		div#root
-			block layout-content
+			#lower
+				block lower-header
 
-		div#footer
-			hr
-			p BERRY Matthew, MENDES Hudson, SYKES Ruth, TOTH Balazs
-			p Agile Software Project, University of London, 2021 
+				footer#footer
+					p BERRY Matthew, MENDES Hudson, SYKES Ruth, TOTH Balazs
+					p Agile Software Project, University of London, 2021 
+
+	block non-obtrusive-js

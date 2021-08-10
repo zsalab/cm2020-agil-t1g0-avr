@@ -1,0 +1,55 @@
+* {
+    font-family: 'Varela Round', sans-serif;
+}
+
+html, body, #main {
+    height: 100%;
+    padding: 0px;
+    margin: 0px;
+}
+
+html { 
+    background: url(../lnf/look-feel-1/sean-oulashin-KMn4VEeEPR8-unsplash.jpeg) no-repeat center center fixed; 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+body {
+    min-height: 100vh;
+}
+
+#main {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+#main > div {
+    text-align: center;
+}
+
+/* HEADER ================================================================================================== */
+#header h1 {
+    color: #fff;
+    text-shadow: 1px 1px #393c33;
+    font-family: 'Sarina', cursive;
+    font-size: 5rem;
+}
+
+#header h1 img {
+    height: 5rem;
+    vertical-align: middle;
+}
+
+/* LOWER ================================================================================================== */
+#lower {
+    background-color: #0004;
+    color: #edebec;
+}
+
+#footer {
+    padding: 3rem 0 3rem 0;
+    text-shadow: 1px 1px #393c33;
+}
