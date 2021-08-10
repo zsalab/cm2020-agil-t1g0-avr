@@ -3,7 +3,18 @@ extends layout
 block specific-style
 	link(rel="stylesheet" href="css/index.css")
 
-block layout-content
-	a.btn-breath
-		img(src="img/logo-chakra.png" alt="chakra")
+block non-obtrusive-js
+	script(type="text/javascript" src="js/breathe.js")
+
+block inner-body
+	button#breathe
 		span Start
+		img(src="img/logo-chakra.png" alt="a chakra picture resembling a flower")
+
+block lower-header
+	section#explanation 
+		header Clarity. Peace. Serenity. 
+		p
+			| Invest in yourself for as little as 60 seconds of your time and take a moment away from the hustle and bustle of everyday life.
+			| Let your stress and worries leave.
+			| Simply click here and Breathe.

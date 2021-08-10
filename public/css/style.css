@@ -1,5 +1,11 @@
+* {
+    font-family: 'Varela Round', sans-serif;
+}
+
 html, body, #main {
     height: 100%;
+    padding: 0px;
+    margin: 0px;
 }
 
 html { 
@@ -12,18 +18,28 @@ html {
 
 body {
     min-height: 100vh;
-    height: 100%;
-    margin: 0px;
-    padding: 0px;
 }
 
-#main {	
-	display: flex; /* or inline-flex */
-	flex-direction: column;
-    justify-content: space-around;
-    height: 100%;
+#main {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 #main > div {
     text-align: center;
+}
+
+
+/* HEADER ================================================================================================== */
+#header h1 {
+    color: #fff;
+    text-shadow: 1px 1px #393c33;
+    font-family: 'Sarina', cursive;
+    font-size: 5rem;
+}
+
+#header h1 img {
+    height: 5rem;
+    vertical-align: middle;
 }

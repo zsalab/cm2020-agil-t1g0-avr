@@ -10,17 +10,25 @@ html
 		link(rel="preconnect" href="https://fonts.gstatic.com" crossorigin)
 		link(rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sarina&display=swap")
 		link(rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Varela+Round&display=swap")
+		link(rel="stylesheet" href="css/reset.css")
 		link(rel="stylesheet" href="css/style.css")
 		block specific-style
 		include heatmap
 	body
-		div#main
-			div#header
+		#main 
+			#header
+				h1
+					img(src="img/logo-chakra.png" alt="a chakra picture resembling a flower")
+					| Breath
 			
-			div#inner
-				block layout-content
+			#inner
+				block inner-body
 
-			div#footer
-				hr
-				p BERRY Matthew, MENDES Hudson, SYKES Ruth, TOTH Balazs
-				p Agile Software Project, University of London, 2021 
+			#lower
+				block lower-header
+
+				footer#footer
+					p BERRY Matthew, MENDES Hudson, SYKES Ruth, TOTH Balazs
+					p Agile Software Project, University of London, 2021 
+
+	block non-obtrusive-js
