@@ -43,3 +43,14 @@ body {
     height: 5rem;
     vertical-align: middle;
 }
+
+/* LOWER ================================================================================================== */
+#lower {
+    background-color: #0004;
+    color: #edebec;
+}
+
+#footer {
+    padding: 3rem 0 3rem 0;
+    text-shadow: 1px 1px #393c33;
+}
