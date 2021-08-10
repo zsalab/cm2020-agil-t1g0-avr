@@ -35,4 +35,5 @@ button#breathe img {
     font-family: 'Sarina', cursive;
     font-size: 1.5rem;   
     padding-bottom: 1rem;
+    text-shadow: 1px 1px #393c33;
 }
