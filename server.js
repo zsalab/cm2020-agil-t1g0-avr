@@ -27,8 +27,10 @@ app.get("/", (req, res) => {
 	});
 });
 
+let abCount = 0;
 app.get("/ab", (req, res) => {
-	if (Math.random() >= 0.5)
+	abCount++
+	if (abCount % 2 == 0)
 		res.redirect('https://forms.gle/9GYeLTKXcYRyCfnr5'); // VERSION: PROTOTYPE
 	else
 		res.redirect('https://forms.gle/HwVPq2Corweropey6'); // VERSION: ENHANCED BREATHING ANIMATION
