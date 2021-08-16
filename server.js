@@ -27,6 +27,13 @@ app.get("/", (req, res) => {
 	});
 });
 
+app.get("/ab", (req, res) => {
+	if (Math.random() >= 0.5)
+		res.redirect('https://forms.gle/9GYeLTKXcYRyCfnr5'); // VERSION: PROTOTYPE
+	else
+		res.redirect('https://forms.gle/HwVPq2Corweropey6'); // VERSION: ENHANCED BREATHING ANIMATION
+});
+
 app.get("/breaths", (req, res) => {
 	var retval = [];
 	var files = fs.readdirSync(BREATHS_PATH);
