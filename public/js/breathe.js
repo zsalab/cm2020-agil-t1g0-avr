@@ -1,3 +1,6 @@
+// This global gets changed by the selector buttons
+textColour = [0xED,0xEB,0xEC];
+
 var chakraImage;
 var chakraProportion = 0.8;
 var running = false;
@@ -64,7 +67,7 @@ function drawLengthSelector() {
 		ellipse(lengths[i].x, lengths[i].y, lengthSelSize);
 		textAlign(CENTER, CENTER);
 		noStroke();
-		fill(255, 255, 255);
+		fill(textColour[0], textColour[1], textColour[2]);
 		textSize(16);
 		text(""+lengths[i].minutes+'"', lengths[i].x, lengths[i].y);
 	}
@@ -89,7 +92,7 @@ function drawText() {
 	textFont(sarinaFont);
 	textAlign(CENTER, CENTER);
 	noStroke();
-	fill(255, 255, 255);
+	fill(textColour[0], textColour[1], textColour[2]);
 	if (!running) {
 		textSize(32);
 		text('Start', width / 2, height / 2)

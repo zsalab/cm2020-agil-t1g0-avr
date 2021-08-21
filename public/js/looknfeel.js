@@ -12,6 +12,8 @@ let explanationText = document.querySelector("#explanation");
 
 
 // Event listeners to change look and feel when each button is clicked
+// The textColour variable is within the breathe.js file and changes the
+// colour of the text in the p5.js animation
 
 button1.addEventListener('click', () =>{
     console.log("button1 clicked");
@@ -19,6 +21,7 @@ button1.addEventListener('click', () =>{
     document.body.style.backgroundSize = "cover";
     logoText.style.color = "#EDEBEC";
     explanationText.style.color = "#EDEBEC";
+    textColour=[0xED,0xEB,0xEC];
 });
 
 button2.addEventListener('click', () =>{
@@ -27,6 +30,7 @@ button2.addEventListener('click', () =>{
     document.body.style.backgroundSize = "cover";
     logoText.style.color = "#056B06";
     explanationText.style.color = "#056B06";
+    textColour=[0x05,0x6B,0x06];
 });
 
 button3.addEventListener('click', () =>{
@@ -35,6 +39,7 @@ button3.addEventListener('click', () =>{
     document.body.style.backgroundSize = "cover";
     logoText.style.color = "#ECEAEB";
     explanationText.style.color = "#ECEAEB";
+    textColour=[0xEC,0xEA,0xEB];
 });
 
 button4.addEventListener('click', () =>{
@@ -43,6 +48,7 @@ button4.addEventListener('click', () =>{
     document.body.style.backgroundSize = "cover";
     logoText.style.color = "#E9EBE8";
     explanationText.style.color = "#E9EBE8";
+    textColour=[0xE9,0xEB,0xE8];
 });
 
 button5.addEventListener('click', () =>{
@@ -51,6 +57,7 @@ button5.addEventListener('click', () =>{
     document.body.style.backgroundSize = "cover";
     logoText.style.color = "#FFFFFF";
     explanationText.style.color = "#FFFFFF";
+    textColour=[0xFF,0xFF,0xFF];
 });
 
 
