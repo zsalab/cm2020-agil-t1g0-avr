@@ -33,6 +33,8 @@ function setup() {
 	myCanvas.parent(parent.id);
 	animWidth = parent.offsetWidth;
 	currentDiameter = diameter = animWidth - animPadding;
+	
+	frameRate(25);
 }
 
 function draw() {
