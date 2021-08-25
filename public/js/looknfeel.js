@@ -17,7 +17,7 @@ let explanationText = document.querySelector("#explanation");
 
 button1.addEventListener('click', () =>{
     console.log("button1 clicked");
-    document.body.style.background = "url('lnf/look-feel-1/sean-oulashin-KMn4VEeEPR8-unsplash.jpeg') no-repeat center center fixed";
+    document.body.style.background = "url('img/sean-oulashin-KMn4VEeEPR8-unsplash.jpeg') no-repeat center center fixed";
     document.body.style.backgroundSize = "cover";
     logoText.style.color = "#EDEBEC";
     explanationText.style.color = "#EDEBEC";
@@ -26,7 +26,7 @@ button1.addEventListener('click', () =>{
 
 button2.addEventListener('click', () =>{
     console.log("button2 clicked");
-    document.body.style.background = "url('lnf/look-feel-1/elizeu-dias-RN6ts8IZ4_0-unsplash.jpg') no-repeat center center fixed";
+    document.body.style.background = "url('img/elizeu-dias-RN6ts8IZ4_0-unsplash.jpg') no-repeat center center fixed";
     document.body.style.backgroundSize = "cover";
     logoText.style.color = "#056B06";
     explanationText.style.color = "#056B06";
@@ -35,7 +35,7 @@ button2.addEventListener('click', () =>{
 
 button3.addEventListener('click', () =>{
     console.log("button3 clicked");
-    document.body.style.background = "url('lnf/look-feel-1/katerina-kerdi-yt1-v0TrOi8-unsplash.jpg') no-repeat center center fixed";
+    document.body.style.background = "url('img/katerina-kerdi-yt1-v0TrOi8-unsplash.jpg') no-repeat center center fixed";
     document.body.style.backgroundSize = "cover";
     logoText.style.color = "#ECEAEB";
     explanationText.style.color = "#ECEAEB";
@@ -44,7 +44,7 @@ button3.addEventListener('click', () =>{
 
 button4.addEventListener('click', () =>{
     console.log("button4 clicked");
-    document.body.style.background = "url('lnf/look-feel-1/yang-wewe-H869_y8UJoI-unsplash.jpg') no-repeat center center fixed";
+    document.body.style.background = "url('img/yang-wewe-H869_y8UJoI-unsplash.jpg') no-repeat center center fixed";
     document.body.style.backgroundSize = "cover";
     logoText.style.color = "#E9EBE8";
     explanationText.style.color = "#E9EBE8";
@@ -53,7 +53,7 @@ button4.addEventListener('click', () =>{
 
 button5.addEventListener('click', () =>{
     console.log("button5 clicked");
-    document.body.style.background = "url('lnf/look-feel-1/anastasia-taioglou-EEDLURXCpqg-unsplash.jpg') no-repeat center center fixed";
+    document.body.style.background = "url('img/anastasia-taioglou-EEDLURXCpqg-unsplash.jpg') no-repeat center center fixed";
     document.body.style.backgroundSize = "cover";
     logoText.style.color = "#FFFFFF";
     explanationText.style.color = "#FFFFFF";

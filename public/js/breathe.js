@@ -1,5 +1,6 @@
 // This global gets changed by the selector buttons
 textColour = [0xED,0xEB,0xEC];
+outlineColour = [0x32,0x69,0x6E];
 
 var chakraImage;
 var chakraProportion = 0.8;
@@ -18,11 +19,13 @@ var animLength = 0;
 var animWidth = 0;
 var midnight = Math.PI*1.5;
 
-var lengthSelSize = 30;
-var lengths = [
-	{ x: 20, y: 30, minutes: 1},
-	{ x: 20, y: 70, minutes: 2},
-	{ x: 20, y: 110, minutes: 5},
+var durationFadeRate = 10;
+var durationOpacity = 255;
+var durationSelSize = 35;
+var durations = [
+	{ x: 20, y:  90, minutes: 1, selected: true },
+	{ x: 20, y: 160, minutes: 2, selected: false },
+	{ x: 20, y: 230, minutes: 5, selected: false },
 ];
 
 function preload() {
@@ -44,35 +47,18 @@ function draw() {
 	clear();
 	noStroke();
 
-	drawGradient()
-	drawChakra();
-	drawText();
-
-	drawLengthSelector();
+	drawBreathingAnimation();
+	drawDurationSelector();
 	
-	if (running) {
+	if (running)
 		breathe();
-	}
 	
 }
 
-function drawLengthSelector() {
-	for (var i = 0; i < lengths.length; i++) {
-		fill(157, 183, 184);
-		if (animLength == lengths[i].minutes*60) {
-			strokeWeight(2);
-			stroke(0, 0, 0);
-		} else {
-			strokeWeight(1);
-			stroke(100, 100, 100);
-		}
-		ellipse(lengths[i].x, lengths[i].y, lengthSelSize);
-		textAlign(CENTER, CENTER);
-		noStroke();
-		fill(textColour[0], textColour[1], textColour[2]);
-		textSize(16);
-		text(""+lengths[i].minutes+'"', lengths[i].x, lengths[i].y);
-	}
+function drawBreathingAnimation() {
+	drawGradient()
+	drawChakra();
+	drawText();
 }
 
 function drawGradient() {
@@ -108,12 +94,33 @@ function drawText() {
 	}
 }
 
+function drawDurationSelector() {
+	for (var i = 0; i < durations.length; i++) {
+		fill(157, 183, 184, durationOpacity);
+		strokeWeight(2);
+		if (durations[i].selected || animLength == durations[i].minutes*60)
+			stroke(outlineColour[0], outlineColour[1], outlineColour[2], durationOpacity);
+		else
+			stroke(255, 255, 255, Math.min(40, durationOpacity));
+		ellipse(durations[i].x, durations[i].y, durationSelSize);
+		textAlign(CENTER, CENTER);
+		noStroke();
+		fill(textColour[0], textColour[1], textColour[2], durationOpacity);
+		textSize(16);
+		text(""+durations[i].minutes+'"', durations[i].x, durations[i].y);
+	}
+	if (!running)
+		durationOpacity = Math.min(durationOpacity + durationFadeRate, 255)
+	else
+		durationOpacity = Math.max(durationOpacity - durationFadeRate, 0)
+}
+
 function breathe() {
 	var secAngle = 360 / (animLength % 360);
 	var archSize = (getCurrentSec() - startedAt) * secAngle;
-	var sw = map(currentDiameter, 0, diameter, 1, 4);
+	var sw = map(currentDiameter, 0, diameter, 1, 10, 50);
 	strokeWeight(sw);
-	stroke(255, 204, 0);
+	stroke(outlineColour[0], outlineColour[1], outlineColour[2]);
 	noFill();
 	arc(width / 2, height / 2, currentDiameter-(sw+1), currentDiameter-(sw+1), midnight, midnight + archSize * (Math.PI/180));
 
@@ -137,20 +144,40 @@ function breathe() {
 }
 
 function mousePressed() {
-	let d = dist(mouseX, mouseY, width / 2, height / 2);
-	if ((d < diameter/2) && !running) {
+	if (!running) {
+		mousePressedIfOnBreathingAnimation();
+		mousePressedIfOnDurationSelector();
+	}
+}
+
+function mousePressedIfOnBreathingAnimation() {
+	var d = dist(mouseX, mouseY, width / 2, height / 2);
+	var clickedOnStart = (d < diameter/2);
+	if (clickedOnStart) {
 		running = true;
 		currentDiameter = diameter * minDiameterProportion;
 		startedAt = getCurrentSec();
 		if (animLength == 0) {
-			animLength = lengths[1].minutes*60;
+			var selectedDuration = durations[0];
+			for (var i = 0; i < durations.length; i++)
+				if (durations[i].selected) {
+					selectedDuration = durations[i];
+					break;
+				}
+			animLength = selectedDuration.minutes*60;
 		}
-//		animLength = 5;
 	}
-	for (var i = 0; i < lengths.length; i++) {
-		let d = dist(mouseX, mouseY, lengths[i].x, lengths[i].y);
-		if ((d < lengthSelSize/2) && !running) {
-			animLength = lengths[i].minutes*60;
+}
+
+function mousePressedIfOnDurationSelector() {
+	for (var i = 0; i < durations.length; i++) {
+		var duration = durations[i];
+		var d = dist(mouseX, mouseY, duration.x, duration.y);
+		var clickedOnSelector = (d < durationSelSize / 2);
+		if (clickedOnSelector) {
+			for (var j = 0; j < durations.length; j++) durations[j].selected = false;
+			duration.selected = true;
+			return;
 		}
 	}
 }
