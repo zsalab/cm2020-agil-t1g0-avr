@@ -1,6 +1,7 @@
 // This global gets changed by the selector buttons
 textColour = [0xED,0xEB,0xEC];
 outlineColour = [0x32,0x69,0x6E];
+breathingAnimationColour = [0x9D,0xB7,0xB8];
 
 var chakraImage;
 var chakraProportion = 0.8;
@@ -64,7 +65,7 @@ function drawBreathingAnimation() {
 function drawGradient() {
 	for (var r = 0; r < currentDiameter; ++r) {
 		var alphaFactor = 1.0 - (r / diameter);
-		fill(157, 183, 184, alphaFactor * 255.0);
+		fill(breathingAnimationColour[0], breathingAnimationColour[1], breathingAnimationColour[2], alphaFactor * 255.0);
 		ellipse(width / 2, height / 2, r);
 	}
 }
@@ -96,7 +97,7 @@ function drawText() {
 
 function drawDurationSelector() {
 	for (var i = 0; i < durations.length; i++) {
-		fill(157, 183, 184, durationOpacity);
+		fill(breathingAnimationColour[0], breathingAnimationColour[1], breathingAnimationColour[2], durationOpacity);
 		strokeWeight(2);
 		if (durations[i].selected || animLength == durations[i].minutes*60)
 			stroke(outlineColour[0], outlineColour[1], outlineColour[2], durationOpacity);
