@@ -3,21 +3,33 @@ textColour = [0xED,0xEB,0xEC];
 outlineColour = [0x32,0x69,0x6E];
 breathingAnimationColour = [0x9D,0xB7,0xB8];
 
+const breathInOutLenSec = 5;
+const animFrameRate = 30;
+const breathInOutFrameCnt = breathInOutLenSec * animFrameRate;
+const breathHoldSec = 2;
+const breatHoldFrameCnt = breathHoldSec * animFrameRate;
+
 var chakraImage;
 var chakraProportion = 0.8;
 var running = false;
 
-var diameter = 0;
-var currentDiameter = 0;
+var diameter = 0.0;
+var currentDiameter = 0.0;
 var minDiameterProportion = 0.05;
 var animPadding = 80;
 
-var breathingIn = true;
+const BREATH_IN = 'BI';
+const BREATH_OUT = 'BO';
+const HOLD_IN = 'HI';
+const HOLD_OUT = 'HO';
+var breathing = BREATH_IN;
 var breathCount = 0;
+var breathHold = 0;
 
 var startedAt = 0;
 var animLength = 0;
 var animWidth = 0;
+var animStep = 0;
 var midnight = Math.PI*1.5;
 
 var durationFadeRate = 10;
@@ -41,7 +53,10 @@ function setup() {
 	animWidth = parent.offsetWidth;
 	currentDiameter = diameter = animWidth - animPadding;
 	
-	frameRate(25);
+	var diameterMaxChange = diameter - (diameter * minDiameterProportion);
+	animStep = diameterMaxChange / breathInOutFrameCnt;
+	
+	frameRate(animFrameRate);
 }
 
 function draw() {
@@ -88,10 +103,17 @@ function drawText() {
 	}
 	else {
 		textSize(24);
-		if (breathingIn)
-			text('breath in', width / 2, height / 2)
-		else
-			text('breath out', width / 2, height / 2)
+		switch (breathing) {
+			case BREATH_IN:
+				text('breath in', width / 2, height / 2)
+				break;
+			case BREATH_OUT:
+				text('breath out', width / 2, height / 2)
+				break;
+			default:
+				text('hold', width / 2, height / 2)
+				break;
+		}
 	}
 }
 
@@ -117,31 +139,58 @@ function drawDurationSelector() {
 }
 
 function breathe() {
-	var secAngle = 360 / (animLength % 360);
-	var archSize = (getCurrentSec() - startedAt) * secAngle;
-	var sw = map(currentDiameter, 0, diameter, 1, 10, 50);
-	strokeWeight(sw);
-	stroke(outlineColour[0], outlineColour[1], outlineColour[2]);
-	noFill();
-	arc(width / 2, height / 2, currentDiameter-(sw+1), currentDiameter-(sw+1), midnight, midnight + archSize * (Math.PI/180));
-
-	if (currentDiameter > diameter) {
-		breathingIn = false;
+	if (breathing != HOLD_OUT) {
+		var secAngle = 360 / (animLength % 360);
+		var archSize = (getCurrentSec() - startedAt) * secAngle;
+		var sw = map(currentDiameter, 0, diameter * (1-minDiameterProportion), 1, 10, 50);
+		strokeWeight(sw);
+		stroke(outlineColour[0], outlineColour[1], outlineColour[2]);
+		noFill();
+		arc(width / 2, height / 2, currentDiameter-(sw+1), currentDiameter-(sw+1), midnight, midnight + archSize * (Math.PI/180));
 	}
 
-	if (currentDiameter < (diameter * minDiameterProportion)) {
-		breathingIn = true;
-		breathCount++;
+	switch (breathing) {
+		case BREATH_IN:
+			currentDiameter += animStep;
+			if (currentDiameter >= diameter) {
+				breathing = HOLD_IN;
+				breathHold = 0;
+			}
+			break;
+		case BREATH_OUT:
+			currentDiameter -= animStep;
+			if (currentDiameter <= (diameter * minDiameterProportion)) {
+				breathing = HOLD_OUT;
+				breathHold = 0;
+			}
+			break;
+		case HOLD_IN:
+			breathHold++;
+			if (breathHold >= breatHoldFrameCnt) {
+				breathing = BREATH_OUT;
+			}
+			break;
+		case HOLD_OUT:
+			breathHold++;
+			if (breathHold >= breatHoldFrameCnt) {
+				breathing = BREATH_IN;
+				breathCount++;
+			}
+			break;
 	}
-
-	if (breathingIn) currentDiameter++
-	else if (!breathingIn) currentDiameter--
 
 	if (getCurrentSec() >= startedAt+animLength) {
-		startedAt = 0;
-		currentDiameter = diameter = animWidth - animPadding;
-		running = false;
+		reset();
 	}
+}
+
+function reset() {
+	startedAt = 0;
+	currentDiameter = diameter = animWidth - animPadding;
+	breathing = BREATH_IN;
+	breathCount = 0;
+	breathHold = 0;
+	running = false;
 }
 
 function mousePressed() {
