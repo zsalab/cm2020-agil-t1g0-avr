@@ -74,9 +74,9 @@ function draw() {
 	drawBreathingAnimation();
 	drawDurationSelector();
 	
-	if (running)
+	if (running) {
 		breathe();
-	
+	}
 }
 
 function drawBreathingAnimation() {
@@ -216,6 +216,7 @@ function mousePressedIfOnBreathingAnimation() {
 		} else {
 			running = true;
 			bgSound[bgAudio].play();
+			bgSound[bgAudio].setLoop(true);
 			currentDiameter = diameter * minDiameterProportion;
 			startedAt = getCurrentSec();
 			if (animLength == 0) {

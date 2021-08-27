@@ -66,6 +66,16 @@ body {
 }
 
 #footer {
+    color: #ffffff;
     padding: 3rem 0 3rem 0;
     text-shadow: 1px 1px #393c33;
+}
+#zapsplat:link {
+	color: #ffffff
+}
+#zapsplat:hover {
+	color: #ffffff
+}
+#zapsplat:visited {
+	color: #ffffff
 }
