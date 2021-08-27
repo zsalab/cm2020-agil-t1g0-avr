@@ -41,14 +41,19 @@ var durations = [
 	{ x: 20, y: 230, minutes: 5, selected: false },
 ];
 
+var bgSound = null;
+
+
 function preload() {
 	sarinaFont = loadFont('fonts/Sarina-Regular.ttf');
-	chakraImage = loadImage('img/logo-chakra.png')
+	chakraImage = loadImage('img/logo-chakra.png');
+	
+	loadBgSound('zapsplat_nature_ocean_surf_50m_away_recorded_in_wooded_area_birds_winter_australia_70688');
 }
 
 function setup() {
-	var parent = document.getElementById('breathe')
-	var myCanvas = createCanvas(parent.offsetWidth, parent.offsetHeight)
+	var parent = document.getElementById('breathe');
+	var myCanvas = createCanvas(parent.offsetWidth, parent.offsetHeight);
 	myCanvas.parent(parent.id);
 	animWidth = parent.offsetWidth;
 	currentDiameter = diameter = animWidth - animPadding;
@@ -57,6 +62,10 @@ function setup() {
 	animStep = diameterMaxChange / breathInOutFrameCnt;
 	
 	frameRate(animFrameRate);
+}
+
+function loadBgSound(name) {
+	bgSound = loadSound('audio/'+name+'.mp3');
 }
 
 function draw() {
@@ -191,10 +200,16 @@ function reset() {
 	breathCount = 0;
 	breathHold = 0;
 	running = false;
+	if (bgSound != null) {
+		bgSound.stop();
+	}
 }
 
 function mousePressed() {
 	if (!running) {
+		if (bgSound != null) {
+			bgSound.play();
+		}
 		mousePressedIfOnBreathingAnimation();
 		mousePressedIfOnDurationSelector();
 	}
