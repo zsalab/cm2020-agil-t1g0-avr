@@ -24,7 +24,7 @@ button1.addEventListener('click', () =>{
     textColour=[0xED,0xEB,0xEC];
     outlineColour=[0xED,0xEB,0xEC];
     breathingAnimationColour=[0x9D,0xB7,0xB8];
-    loadBgSound('zapsplat_nature_ocean_surf_50m_away_recorded_in_wooded_area_birds_winter_australia_70688');
+    bgAudio = 'S1';
 });
 
 button2.addEventListener('click', () =>{
@@ -36,7 +36,7 @@ button2.addEventListener('click', () =>{
     textColour=[0xff,0xff,0xff];
     outlineColour=[0xff,0xff,0xff];
     breathingAnimationColour=[0xb1, 0x99, 0x39];
-    loadBgSound('zapsplat_nature_ocean_surf_50m_away_recorded_in_wooded_area_birds_winter_australia_70688');
+    bgAudio = 'S2';
 });
 
 button3.addEventListener('click', () =>{
@@ -48,7 +48,7 @@ button3.addEventListener('click', () =>{
     textColour=[0xEC,0xEA,0xEB];
     outlineColour=[0xED,0xEB,0xEC];
     breathingAnimationColour=[0x13, 0x56, 0x80];
-    loadBgSound('zapsplat_nature_ocean_surf_50m_away_recorded_in_wooded_area_birds_winter_australia_70688');
+    bgAudio = 'S3';
 });
 
 button4.addEventListener('click', () =>{
@@ -60,7 +60,7 @@ button4.addEventListener('click', () =>{
     textColour=[0xE9,0xEB,0xE8];
     outlineColour=[0xED,0xEB,0xEC];
     breathingAnimationColour=[0x1c,0x44,0x89];
-    loadBgSound('zapsplat_nature_ocean_surf_50m_away_recorded_in_wooded_area_birds_winter_australia_70688');
+    bgAudio = 'S4';
 });
 
 button5.addEventListener('click', () =>{
@@ -72,5 +72,5 @@ button5.addEventListener('click', () =>{
     textColour=[0xFF,0xFF,0xFF];
     outlineColour=[0xED,0xEB,0xEC];
     breathingAnimationColour=[0x17,0x05,0x39];
-    loadBgSound('zapsplat_nature_ocean_surf_50m_away_recorded_in_wooded_area_birds_winter_australia_70688');
+    bgAudio = 'S5';
 });

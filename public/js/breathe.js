@@ -2,6 +2,7 @@
 textColour = [0xED,0xEB,0xEC];
 outlineColour = [0x32,0x69,0x6E];
 breathingAnimationColour = [0x9D,0xB7,0xB8];
+bgAudio = 'S1';
 
 const breathInOutLenSec = 5;
 const animFrameRate = 30;
@@ -41,14 +42,16 @@ var durations = [
 	{ x: 20, y: 230, minutes: 5, selected: false },
 ];
 
-var bgSound = null;
+var bgSound = {};
 
 
 function preload() {
 	sarinaFont = loadFont('fonts/Sarina-Regular.ttf');
 	chakraImage = loadImage('img/logo-chakra.png');
-	
-	loadBgSound('zapsplat_nature_ocean_surf_50m_away_recorded_in_wooded_area_birds_winter_australia_70688');
+
+	for (i = 1; i <= 5; i++) {
+		bgSound['S'+i] = loadSound('/audio/'+i+'.mp3');
+	}
 }
 
 function setup() {
@@ -62,10 +65,6 @@ function setup() {
 	animStep = diameterMaxChange / breathInOutFrameCnt;
 	
 	frameRate(animFrameRate);
-}
-
-function loadBgSound(name) {
-	bgSound = loadSound('audio/'+name+'.mp3');
 }
 
 function draw() {
@@ -194,55 +193,55 @@ function breathe() {
 }
 
 function reset() {
+	running = false;
 	startedAt = 0;
 	currentDiameter = diameter = animWidth - animPadding;
 	breathing = BREATH_IN;
 	breathCount = 0;
 	breathHold = 0;
-	running = false;
-	if (bgSound != null) {
-		bgSound.stop();
-	}
+	bgSound[bgAudio].stop();
 }
 
 function mousePressed() {
-	if (!running) {
-		if (bgSound != null) {
-			bgSound.play();
-		}
-		mousePressedIfOnBreathingAnimation();
-		mousePressedIfOnDurationSelector();
-	}
+	mousePressedIfOnBreathingAnimation();
+	mousePressedIfOnDurationSelector();
 }
 
 function mousePressedIfOnBreathingAnimation() {
 	var d = dist(mouseX, mouseY, width / 2, height / 2);
 	var clickedOnStart = (d < diameter/2);
 	if (clickedOnStart) {
-		running = true;
-		currentDiameter = diameter * minDiameterProportion;
-		startedAt = getCurrentSec();
-		if (animLength == 0) {
-			var selectedDuration = durations[0];
-			for (var i = 0; i < durations.length; i++)
-				if (durations[i].selected) {
-					selectedDuration = durations[i];
-					break;
-				}
-			animLength = selectedDuration.minutes*60;
+		if (running) {
+			reset();
+		} else {
+			running = true;
+			bgSound[bgAudio].play();
+			currentDiameter = diameter * minDiameterProportion;
+			startedAt = getCurrentSec();
+			if (animLength == 0) {
+				var selectedDuration = durations[0];
+				for (var i = 0; i < durations.length; i++)
+					if (durations[i].selected) {
+						selectedDuration = durations[i];
+						break;
+					}
+				animLength = selectedDuration.minutes*60;
+			}
 		}
 	}
 }
 
 function mousePressedIfOnDurationSelector() {
-	for (var i = 0; i < durations.length; i++) {
-		var duration = durations[i];
-		var d = dist(mouseX, mouseY, duration.x, duration.y);
-		var clickedOnSelector = (d < durationSelSize / 2);
-		if (clickedOnSelector) {
-			for (var j = 0; j < durations.length; j++) durations[j].selected = false;
-			duration.selected = true;
-			return;
+	if (!running) {
+		for (var i = 0; i < durations.length; i++) {
+			var duration = durations[i];
+			var d = dist(mouseX, mouseY, duration.x, duration.y);
+			var clickedOnSelector = (d < durationSelSize / 2);
+			if (clickedOnSelector) {
+				for (var j = 0; j < durations.length; j++) durations[j].selected = false;
+				duration.selected = true;
+				return;
+			}
 		}
 	}
 }
