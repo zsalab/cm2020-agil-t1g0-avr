@@ -113,10 +113,10 @@ function drawText() {
 		textSize(24);
 		switch (breathing) {
 			case BREATH_IN:
-				text('breath in', width / 2, height / 2)
+				text('breathe in', width / 2, height / 2)
 				break;
 			case BREATH_OUT:
-				text('breath out', width / 2, height / 2)
+				text('breathe out', width / 2, height / 2)
 				break;
 			default:
 				text('hold', width / 2, height / 2)
