@@ -4,21 +4,17 @@ outlineColour = [0x32,0x69,0x6E];
 breathingAnimationColour = [0x9D,0xB7,0xB8];
 bgAudio = 'S1';
 
+//animation vars
 const breathInOutLenSec = 5;
 const animFrameRate = 30;
 const breathInOutFrameCnt = breathInOutLenSec * animFrameRate;
 const breathHoldSec = 2;
 const breatHoldFrameCnt = breathHoldSec * animFrameRate;
-
-var chakraImage;
-var chakraProportion = 0.8;
-var running = false;
-
 var diameter = 0.0;
 var currentDiameter = 0.0;
 var minDiameterProportion = 0.05;
 var animPadding = 80;
-
+var running = false;
 const BREATH_IN = 'BI';
 const BREATH_OUT = 'BO';
 const HOLD_IN = 'HI';
@@ -26,13 +22,11 @@ const HOLD_OUT = 'HO';
 var breathing = BREATH_IN;
 var breathCount = 0;
 var breathHold = 0;
-
 var startedAt = 0;
 var animLength = 0;
 var animWidth = 0;
 var animStep = 0;
 var midnight = Math.PI*1.5;
-
 var durationFadeRate = 10;
 var durationOpacity = 255;
 var durationSelSize = 35;
@@ -42,10 +36,17 @@ var durations = [
 	{ x: 20, y: 230, minutes: 5, selected: false },
 ];
 
-var bgSound = {};
+//chakra image vars
+var chakraImage;
+var chakraProportion = 0.8;
+
+var bgSound = {}; //music var
 
 
 function preload() {
+	/*
+	 * Preload font and sound files
+	 */
 	sarinaFont = loadFont('fonts/Sarina-Regular.ttf');
 	chakraImage = loadImage('img/logo-chakra.png');
 
@@ -55,6 +56,9 @@ function preload() {
 }
 
 function setup() {
+	/*
+	 * Set canvas within parent element
+	 */
 	var parent = document.getElementById('breathe');
 	var myCanvas = createCanvas(parent.offsetWidth, parent.offsetHeight);
 	myCanvas.parent(parent.id);
@@ -64,10 +68,13 @@ function setup() {
 	var diameterMaxChange = diameter - (diameter * minDiameterProportion);
 	animStep = diameterMaxChange / breathInOutFrameCnt;
 	
-	frameRate(animFrameRate);
+	frameRate(animFrameRate); //set static framerate
 }
 
 function draw() {
+	/*
+	 * Draw the canvas and content
+	 */
 	clear();
 	noStroke();
 
@@ -80,12 +87,18 @@ function draw() {
 }
 
 function drawBreathingAnimation() {
+	/*
+	 * Draw the animation gradient, chakra image and overlay text
+	 */
 	drawGradient()
 	drawChakra();
 	drawText();
 }
 
 function drawGradient() {
+	/*
+	 * Animatie the loading bar gradient around the breathing animation
+	 */
 	for (var r = 0; r < currentDiameter; ++r) {
 		var alphaFactor = 1.0 - (r / diameter);
 		fill(breathingAnimationColour[0], breathingAnimationColour[1], breathingAnimationColour[2], alphaFactor * 255.0);
@@ -94,6 +107,9 @@ function drawGradient() {
 }
 
 function drawChakra() {
+	/*
+	 * Draw chakra image logo for breathing animation
+	 */
 	tint(255, 63);
 	var w = diameter * chakraProportion;
 	var h = diameter * chakraProportion;
@@ -101,6 +117,9 @@ function drawChakra() {
 }
 
 function drawText() {
+	/*
+	 * Draw the breathing in, hold, breathing out text
+	 */
 	textFont(sarinaFont);
 	textAlign(CENTER, CENTER);
 	noStroke();
@@ -126,6 +145,9 @@ function drawText() {
 }
 
 function drawDurationSelector() {
+	/*
+	 * Draw the duration buttons
+	 */
 	for (var i = 0; i < durations.length; i++) {
 		fill(breathingAnimationColour[0], breathingAnimationColour[1], breathingAnimationColour[2], durationOpacity);
 		strokeWeight(2);
@@ -147,6 +169,9 @@ function drawDurationSelector() {
 }
 
 function breathe() {
+	/*
+	 * Draw the breathing animation
+	 */
 	if (breathing != HOLD_OUT) {
 		var secAngle = 360 / (animLength % 360);
 		var archSize = (getCurrentSec() - startedAt) * secAngle;
@@ -159,6 +184,7 @@ function breathe() {
 
 	switch (breathing) {
 		case BREATH_IN:
+			//Adjust the animation to expand in size
 			currentDiameter += animStep;
 			if (currentDiameter >= diameter) {
 				breathing = HOLD_IN;
@@ -166,6 +192,7 @@ function breathe() {
 			}
 			break;
 		case BREATH_OUT:
+			//Adjust the animation to reduce in size
 			currentDiameter -= animStep;
 			if (currentDiameter <= (diameter * minDiameterProportion)) {
 				breathing = HOLD_OUT;
@@ -173,12 +200,14 @@ function breathe() {
 			}
 			break;
 		case HOLD_IN:
+			//Adjust the breathing animation to hold in
 			breathHold++;
 			if (breathHold >= breatHoldFrameCnt) {
 				breathing = BREATH_OUT;
 			}
 			break;
 		case HOLD_OUT:
+			//Adjust the breathing animation to hold out
 			breathHold++;
 			if (breathHold >= breatHoldFrameCnt) {
 				breathing = BREATH_IN;
@@ -188,11 +217,15 @@ function breathe() {
 	}
 
 	if (getCurrentSec() >= startedAt+animLength) {
+		//reset the animation as the breathing exercise is complete
 		reset();
 	}
 }
 
 function reset() {
+	/*
+	 * Reset the breathing animation to the default start position
+	 */
 	running = false;
 	startedAt = 0;
 	currentDiameter = diameter = animWidth - animPadding;
@@ -208,6 +241,9 @@ function mousePressed() {
 }
 
 function mousePressedIfOnBreathingAnimation() {
+	/*
+	 * Start the breathing animation
+	 */
 	var d = dist(mouseX, mouseY, width / 2, height / 2);
 	var clickedOnStart = (d < diameter/2);
 	if (clickedOnStart) {
@@ -233,6 +269,9 @@ function mousePressedIfOnBreathingAnimation() {
 }
 
 function mousePressedIfOnDurationSelector() {
+	/*
+	 * Set the breathing animation duration
+	 */
 	if (!running) {
 		for (var i = 0; i < durations.length; i++) {
 			var duration = durations[i];
@@ -248,5 +287,6 @@ function mousePressedIfOnDurationSelector() {
 }
 
 function getCurrentSec() {
+	//Get the current time for rendering purposes on the arch
 	return new Date().getTime() / 1000;
 }
