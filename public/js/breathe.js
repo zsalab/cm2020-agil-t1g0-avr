@@ -44,7 +44,6 @@ var durations = [
 
 var bgSound = {};
 
-
 function preload() {
 	sarinaFont = loadFont('fonts/Sarina-Regular.ttf');
 	chakraImage = loadImage('img/logo-chakra.png');

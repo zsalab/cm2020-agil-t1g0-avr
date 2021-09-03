@@ -7,8 +7,15 @@ block non-obtrusive-js
 	script(type="text/javascript" src="js/breathe.js")
 	script(type="text/javascript" src="js/looknfeel.js")
 
+block upper-header 
+	include looknfeel
+
 block inner-body
-	div#breathe
+	.column
+	.column
+		#breathe
+	.column
+		include looknfeel
 
 block lower-header
 	section#explanation 
