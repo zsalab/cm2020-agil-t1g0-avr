@@ -1,10 +1,24 @@
-div#inner {
-	width: 100%;
-	height: 100%;
+/* SELECTOR ============================================================ */
+
+.selector .btn-looknfeel { cursor: pointer; box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25); }
+#inner .selector { display: none }
+#inner .selector .btn-looknfeel { border-radius: 5px; }
+#upper .selector { display: flex; justify-content: space-around; margin-bottom: 20px; }
+#upper .selector .btn-looknfeel { width: 55px; height: 55px; border-radius: 50%; }
+
+@media (min-width: 1024px) {
+    #upper .selector { display: none; }
+    #inner .selector { display: block; }
 }
 
+/* #inner .column:nth-of-type(3) */
+#inner .column:nth-of-type(1),
+#inner .column:nth-of-type(3) { width: 100px; }
+#inner .column:nth-of-type(3) { margin-top: -100px; }
+#inner .selector .btn-looknfeel { display: flex; flex-direction: column; width: 100px; height: 70px; margin: 10px; object-fit: cover; }
+
 /* BREATHE ============================================================== */
-div#breathe {
+#breathe {
     width: 20rem;
     height: 20rem;
     margin: auto;
@@ -15,14 +29,14 @@ div#breathe {
     cursor: pointer;
 }
 
-div#breathe canvas {
+#breathe canvas {
     position: relative;
     z-index: 0;
 }
 
 /* EXPLANATION ========================================================== */
 #explanation {
-    padding-top: 2rem;
+    padding-top: 1rem;
 }
 
 #explanation header {
