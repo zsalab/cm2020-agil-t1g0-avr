@@ -1,7 +1,13 @@
+div#inner {
+	width: 100%;
+	height: 100%;
+}
+
 /* BREATHE ============================================================== */
-button#breathe {
-    width: 15rem;
-    height: 15rem;
+div#breathe {
+    width: 20rem;
+    height: 20rem;
+    margin: auto;
 
     text-align: center;
     border: none;
@@ -9,7 +15,7 @@ button#breathe {
     cursor: pointer;
 }
 
-button#breathe canvas {
+div#breathe canvas {
     position: relative;
     z-index: 0;
 }
