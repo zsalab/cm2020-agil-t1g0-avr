@@ -13,9 +13,7 @@ app.use(express.static(path.join(__dirname, "public")));
 
 // Routes Definitions
 app.get("/", (req, res) => {
-	res.render("index", { 
-		title: "Breath :: Home",
-	});
+	res.render("index", { title: "Breath, 60 seconds of Clarity. Peace. Serenity." });
 });
 
 let abCount = 0;
