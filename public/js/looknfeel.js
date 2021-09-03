@@ -54,6 +54,18 @@ var lookAndFeelDefinitions = [
 // Event listeners to change look and feel when each button is clicked
 // The textColour variable is within the breathe.js file and changes the
 // colour of the text in the p5.js animation
+function loadLookAndFeel(definitions) {
+    document.body.style.background = "url('" + definitions.bgImage + "') no-repeat center center fixed";
+    document.body.style.backgroundSize = "cover";
+    logoText.style.color = definitions.logoTextColour;
+    explanationText.style.color = definitions.explanationTextColour;
+    textColour=definitions.generalTextColour;
+    outlineColour=definitions.outlineColour;
+    breathingAnimationColour=definitions.breathingAnimationColour;
+    bgAudio = definitions.audioFile;
+    preloadSound(definitions.audioFile);
+}
+
 var btnSelectors = document.getElementsByClassName('btn-looknfeel');
 for (var i = 0; i < btnSelectors.length; i++) {
     var btnSelector = btnSelectors[i];
@@ -61,13 +73,13 @@ for (var i = 0; i < btnSelectors.length; i++) {
         var button = evt.target;
         var lookAndFeelIndex = parseInt(button.getAttribute("data-looknfeel"));
         var definitions = lookAndFeelDefinitions[lookAndFeelIndex];
-        document.body.style.background = "url('" + definitions.bgImage + "') no-repeat center center fixed";
-        document.body.style.backgroundSize = "cover";
-        logoText.style.color = definitions.logoTextColour;
-        explanationText.style.color = definitions.explanationTextColour;
-        textColour=definitions.generalTextColour;
-        outlineColour=definitions.outlineColour;
-        breathingAnimationColour=definitions.breathingAnimationColour;
-        bgAudio = definitions.audioFile;
+        loadLookAndFeel(definitions);
     });
+}
+
+// Preloads default audio
+afterP5jsSetup = function() {
+    var defaultDefinitions = lookAndFeelDefinitions[0];
+    loadLookAndFeel(defaultDefinitions);
+    preloadSound(defaultDefinitions.audioFile);
 }

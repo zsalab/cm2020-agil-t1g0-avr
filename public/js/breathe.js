@@ -1,8 +1,8 @@
 // This global gets changed by the selector buttons
-textColour = [0xED,0xEB,0xEC];
-outlineColour = [0x32,0x69,0x6E];
-breathingAnimationColour = [0x9D,0xB7,0xB8];
-bgAudio = 'S1';
+textColour = null;
+outlineColour = null;
+breathingAnimationColour = null;
+bgAudio = null;
 
 const breathInOutLenSec = 5;
 const animFrameRate = 30;
@@ -13,6 +13,7 @@ const breatHoldFrameCnt = breathHoldSec * animFrameRate;
 var chakraImage;
 var chakraProportion = 0.8;
 var running = false;
+var afterP5jsSetup = null;
 
 var diameter = 0.0;
 var currentDiameter = 0.0;
@@ -43,15 +44,37 @@ var durations = [
 ];
 
 var bgSound = {};
+var bgSoundFadeInSecs = 3;
+
+function preloadSound(soundFilename) {
+	// checks if there's anything already playing, and stop it if that is the case
+	var previouslyPlaying = false;
+	var allPreviouslyPlaying = resetBgSounds();
+	if (allPreviouslyPlaying.length > 0) {
+		console.log('"' + allPreviouslyPlaying[0] + '", previously playing.')
+		previouslyPlaying = true;
+	}
+	
+	// preload the incoming sound file, if it is new
+	if (soundFilename && !bgSound[soundFilename]) {
+		console.log('"' + soundFilename + '", load started...');
+		bgSound[soundFilename] = loadSound(
+			soundFilename,
+			/*successCallback*/ function() {
+				console.log('"' + soundFilename + '", load completed.');
+				if (previouslyPlaying) {
+					console.log('"' + soundFilename + '", replacing previous playback.');
+					bgSound[soundFilename].setVolume(0);
+					bgSound[soundFilename].play();
+					bgSound[soundFilename].setVolume(1.0, bgSoundFadeInSecs);
+				}
+			});
+	}
+}
 
 function preload() {
 	sarinaFont = loadFont('fonts/Sarina-Regular.ttf');
 	chakraImage = loadImage('img/logo-chakra.png');
-
-	for (i = 1; i <= 5; i++) {
-		const fileName = 'audio/'+i+'.mp3';
-		bgSound[fileName] = loadSound(fileName);
-	}
 }
 
 function setup() {
@@ -65,6 +88,8 @@ function setup() {
 	animStep = diameterMaxChange / breathInOutFrameCnt;
 	
 	frameRate(animFrameRate);
+	if (afterP5jsSetup && typeof(afterP5jsSetup) == 'function')
+		afterP5jsSetup.apply();
 }
 
 function draw() {
@@ -192,6 +217,17 @@ function breathe() {
 	}
 }
 
+function resetBgSounds() {
+	var previouslyPlaying = [];
+	for (var bgSoundKey in bgSound)
+		if (bgSound[bgSoundKey].isPlaying()) {
+			bgSound[bgSoundKey].setVolume(0.0, bgSoundFadeInSecs);
+			bgSound[bgSoundKey].stop(bgSoundFadeInSecs);
+			previouslyPlaying.push(bgSoundKey);
+		}
+	return previouslyPlaying;
+}
+
 function reset() {
 	running = false;
 	startedAt = 0;
@@ -199,7 +235,7 @@ function reset() {
 	breathing = BREATH_IN;
 	breathCount = 0;
 	breathHold = 0;
-	bgSound[bgAudio].stop();
+	resetBgSounds();
 }
 
 function mousePressed() {
@@ -215,8 +251,8 @@ function mousePressedIfOnBreathingAnimation() {
 			reset();
 		} else {
 			running = true;
-			bgSound[bgAudio].play();
-			bgSound[bgAudio].setLoop(true);
+
+			// breathing animation: start
 			currentDiameter = diameter * minDiameterProportion;
 			startedAt = getCurrentSec();
 			if (animLength == 0) {
@@ -228,6 +264,27 @@ function mousePressedIfOnBreathingAnimation() {
 					}
 				animLength = selectedDuration.minutes*60;
 			}
+
+			// ======================================================
+			// audio: start
+			// ======================================================
+			// the audio may still be downloading if the user clicked
+			// on start before the audio was downloaded. In that case
+			// we keep rescheduling the start until it's ready or
+			// until the animation finishes
+			var startPlayingWhenReady = function() {
+				if (running && bgAudio && bgSound[bgAudio]) {
+					if (bgSound[bgAudio].isLoaded()) {
+						bgSound[bgAudio].setVolume(0.0);
+						bgSound[bgAudio].play();
+						bgSound[bgAudio].setVolume(1.0, bgSoundFadeInSecs);
+						bgSound[bgAudio].setLoop(true);
+					}
+					else
+						setTimeout(startPlayingWhenReady, 1000);
+				}
+			}
+			setTimeout(startPlayingWhenReady, 1000);
 		}
 	}
 }
