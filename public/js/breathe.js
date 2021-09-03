@@ -13,7 +13,9 @@ const breatHoldFrameCnt = breathHoldSec * animFrameRate;
 var chakraImage;
 var chakraProportion = 0.8;
 var running = false;
-var afterP5jsSetup = null;
+
+var afterP5jsSetupSync = null;
+var afterP5jsSetupAsync = null;
 
 var diameter = 0.0;
 var currentDiameter = 0.0;
@@ -87,10 +89,13 @@ function setup() {
 	
 	var diameterMaxChange = diameter - (diameter * minDiameterProportion);
 	animStep = diameterMaxChange / breathInOutFrameCnt;
-	
 	frameRate(animFrameRate);
-	if (afterP5jsSetup && typeof(afterP5jsSetup) == 'function')
-		afterP5jsSetup.apply();
+
+	// p5js hooks called synchronously and asynchornously if defined
+	if (afterP5jsSetupSync && typeof(afterP5jsSetupSync) == 'function')
+		afterP5jsSetupSync.apply();
+	if (afterP5jsSetupAsync && typeof(afterP5jsSetupAsync) == 'function')
+		setTimeout(afterP5jsSetupAsync, 50);
 }
 
 function draw() {

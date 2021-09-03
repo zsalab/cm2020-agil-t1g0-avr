@@ -78,8 +78,12 @@ for (var i = 0; i < btnSelectors.length; i++) {
 }
 
 // Preloads default audio
-afterP5jsSetup = function() {
+afterP5jsSetupSync = function () {
     var defaultDefinitions = lookAndFeelDefinitions[0];
     loadLookAndFeel(defaultDefinitions);
+}
+
+afterP5jsSetupAsync = function() {
+    var defaultDefinitions = lookAndFeelDefinitions[0];
     preloadSound(defaultDefinitions.audioFile);
 }
