@@ -49,7 +49,8 @@ function preload() {
 	chakraImage = loadImage('img/logo-chakra.png');
 
 	for (i = 1; i <= 5; i++) {
-		bgSound['S'+i] = loadSound('/audio/'+i+'.mp3');
+		const fileName = 'audio/'+i+'.mp3';
+		bgSound[fileName] = loadSound(fileName);
 	}
 }
 
