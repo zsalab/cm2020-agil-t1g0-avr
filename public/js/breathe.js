@@ -155,7 +155,7 @@ function drawDurationSelector() {
 	for (var i = 0; i < durations.length; i++) {
 		fill(breathingAnimationColour[0], breathingAnimationColour[1], breathingAnimationColour[2], durationOpacity);
 		strokeWeight(2);
-		if (durations[i].selected || animLength == durations[i].minutes*60)
+		if (durations[i].selected)
 			stroke(outlineColour[0], outlineColour[1], outlineColour[2], durationOpacity);
 		else
 			stroke(255, 255, 255, Math.min(40, durationOpacity));
@@ -285,8 +285,10 @@ function mousePressedIfOnDurationSelector() {
 			var d = dist(mouseX, mouseY, duration.x, duration.y);
 			var clickedOnSelector = (d < durationSelSize / 2);
 			if (clickedOnSelector) {
-				for (var j = 0; j < durations.length; j++) durations[j].selected = false;
+				for (var j = 0; j < durations.length; j++)
+					durations[j].selected = false;
 				duration.selected = true;
+				animLength = duration.minutes * 60;
 				return;
 			}
 		}
