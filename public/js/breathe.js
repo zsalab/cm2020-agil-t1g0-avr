@@ -137,7 +137,7 @@ function drawDurationSelector() {
 		noStroke();
 		fill(textColour[0], textColour[1], textColour[2], durationOpacity);
 		textSize(16);
-		text(""+durations[i].minutes+'"', durations[i].x, durations[i].y);
+		text(""+durations[i].minutes+'"', durations[i].x + 3, durations[i].y - 1);
 	}
 	if (!running)
 		durationOpacity = Math.min(durationOpacity + durationFadeRate, 255)
