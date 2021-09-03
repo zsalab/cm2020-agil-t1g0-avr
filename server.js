@@ -17,12 +17,16 @@ app.get("/", (req, res) => {
 });
 
 let abCount = 0;
-app.get("/ab", (req, res) => {
+let abVersions = [
+	'https://forms.gle/ARE44MHuAmeMbhCK9',
+	'https://forms.gle/qmyfAVDaGAH5KpwVA',
+	'https://forms.gle/HAKbNP3PsJHfGXcF7'
+];
+app.get("/survey", (req, res) => {
 	abCount++
-	if (abCount % 2 == 0)
-		res.redirect('https://forms.gle/9GYeLTKXcYRyCfnr5'); // VERSION: PROTOTYPE
-	else
-		res.redirect('https://forms.gle/HwVPq2Corweropey6'); // VERSION: ENHANCED BREATHING ANIMATION
+	let abIndex = abCount % abVersions.length
+	let abUrl = abVersions[abIndex];
+	res.redirect(abUrl);
 });
 
 // Server Activation
