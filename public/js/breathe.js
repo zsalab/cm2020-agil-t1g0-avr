@@ -56,19 +56,20 @@ function preloadSound(soundFilename) {
 	}
 	
 	// preload the incoming sound file, if it is new
-	if (soundFilename && !bgSound[soundFilename]) {
-		console.log('"' + soundFilename + '", load started...');
-		bgSound[soundFilename] = loadSound(
-			soundFilename,
-			/*successCallback*/ function() {
-				console.log('"' + soundFilename + '", load completed.');
-				if (previouslyPlaying) {
-					console.log('"' + soundFilename + '", replacing previous playback.');
-					bgSound[soundFilename].setVolume(0);
-					bgSound[soundFilename].play();
-					bgSound[soundFilename].setVolume(1.0, bgSoundFadeInSecs);
-				}
-			});
+	if (soundFilename) {
+		var successCallback = function() {
+			console.log('"' + soundFilename + '", load completed.');
+			if (previouslyPlaying) {
+				console.log('"' + soundFilename + '", replacing previous playback.');
+				startPlayingWhenReady();
+			}
+		}
+		if (!bgSound[soundFilename]) {
+			console.log('"' + soundFilename + '", load started...');			
+			bgSound[soundFilename] = loadSound(soundFilename, successCallback);
+		}
+		else if (previouslyPlaying)
+			successCallback();
 	}
 }
 
@@ -272,18 +273,6 @@ function mousePressedIfOnBreathingAnimation() {
 			// on start before the audio was downloaded. In that case
 			// we keep rescheduling the start until it's ready or
 			// until the animation finishes
-			var startPlayingWhenReady = function() {
-				if (running && bgAudio && bgSound[bgAudio]) {
-					if (bgSound[bgAudio].isLoaded()) {
-						bgSound[bgAudio].setVolume(0.0);
-						bgSound[bgAudio].play();
-						bgSound[bgAudio].setVolume(1.0, bgSoundFadeInSecs);
-						bgSound[bgAudio].setLoop(true);
-					}
-					else
-						setTimeout(startPlayingWhenReady, 1000);
-				}
-			}
 			setTimeout(startPlayingWhenReady, 1000);
 		}
 	}
@@ -301,6 +290,19 @@ function mousePressedIfOnDurationSelector() {
 				return;
 			}
 		}
+	}
+}
+
+function startPlayingWhenReady() {
+	if (running && bgAudio && bgSound[bgAudio]) {
+		if (bgSound[bgAudio].isLoaded()) {
+			bgSound[bgAudio].setVolume(0.0);
+			bgSound[bgAudio].play();
+			bgSound[bgAudio].setVolume(1.0, bgSoundFadeInSecs);
+			bgSound[bgAudio].setLoop(true);
+		}
+		else
+			setTimeout(startPlayingWhenReady, 1000);
 	}
 }
 
