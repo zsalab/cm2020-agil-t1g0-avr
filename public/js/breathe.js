@@ -13,7 +13,9 @@ const breatHoldFrameCnt = breathHoldSec * animFrameRate;
 var chakraImage;
 var chakraProportion = 0.8;
 var running = false;
-var afterP5jsSetup = null;
+
+var afterP5jsSetupSync = null;
+var afterP5jsSetupAsync = null;
 
 var diameter = 0.0;
 var currentDiameter = 0.0;
@@ -87,10 +89,13 @@ function setup() {
 	
 	var diameterMaxChange = diameter - (diameter * minDiameterProportion);
 	animStep = diameterMaxChange / breathInOutFrameCnt;
-	
 	frameRate(animFrameRate);
-	if (afterP5jsSetup && typeof(afterP5jsSetup) == 'function')
-		afterP5jsSetup.apply();
+
+	// p5js hooks called synchronously and asynchornously if defined
+	if (afterP5jsSetupSync && typeof(afterP5jsSetupSync) == 'function')
+		afterP5jsSetupSync.apply();
+	if (afterP5jsSetupAsync && typeof(afterP5jsSetupAsync) == 'function')
+		setTimeout(afterP5jsSetupAsync, 50);
 }
 
 function draw() {
@@ -155,7 +160,7 @@ function drawDurationSelector() {
 	for (var i = 0; i < durations.length; i++) {
 		fill(breathingAnimationColour[0], breathingAnimationColour[1], breathingAnimationColour[2], durationOpacity);
 		strokeWeight(2);
-		if (durations[i].selected || animLength == durations[i].minutes*60)
+		if (durations[i].selected)
 			stroke(outlineColour[0], outlineColour[1], outlineColour[2], durationOpacity);
 		else
 			stroke(255, 255, 255, Math.min(40, durationOpacity));
@@ -285,8 +290,10 @@ function mousePressedIfOnDurationSelector() {
 			var d = dist(mouseX, mouseY, duration.x, duration.y);
 			var clickedOnSelector = (d < durationSelSize / 2);
 			if (clickedOnSelector) {
-				for (var j = 0; j < durations.length; j++) durations[j].selected = false;
+				for (var j = 0; j < durations.length; j++)
+					durations[j].selected = false;
 				duration.selected = true;
+				animLength = duration.minutes * 60;
 				return;
 			}
 		}

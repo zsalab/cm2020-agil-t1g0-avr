@@ -7,7 +7,7 @@ var lookAndFeelDefinitions = [
     {
         audioFile: 'audio/1.mp3',
         bgImage: 'img/sean-oulashin-KMn4VEeEPR8-unsplash.jpeg',
-        logoTextColour: '#EDEBEC',
+        logoTextColour: '#FFFFFF',
         explanationTextColour: '#EDEBEC',
         generalTextColour: [0xED,0xEB,0xEC],
         outlineColour: [0xED,0xEB,0xEC],
@@ -25,7 +25,7 @@ var lookAndFeelDefinitions = [
     {
         audioFile: 'audio/3.mp3',
         bgImage: 'img/katerina-kerdi-yt1-v0TrOi8-unsplash.jpg',
-        logoTextColour: '#ECEAEB',
+        logoTextColour: '#FFFFFF',
         explanationTextColour: '#ECEAEB',
         generalTextColour: [0xEC,0xEA,0xEB],
         outlineColour: [0xED,0xEB,0xEC],
@@ -34,7 +34,7 @@ var lookAndFeelDefinitions = [
     {
         audioFile: 'audio/4.mp3',
         bgImage: 'img/yang-wewe-H869_y8UJoI-unsplash.jpg',
-        logoTextColour: '#E9EBE8',
+        logoTextColour: '#FFFFFF',
         explanationTextColour: '#E9EBE8',
         generalTextColour: [0xE9,0xEB,0xE8],
         outlineColour: [0xED,0xEB,0xEC],
@@ -78,8 +78,12 @@ for (var i = 0; i < btnSelectors.length; i++) {
 }
 
 // Preloads default audio
-afterP5jsSetup = function() {
+afterP5jsSetupSync = function () {
     var defaultDefinitions = lookAndFeelDefinitions[0];
     loadLookAndFeel(defaultDefinitions);
+}
+
+afterP5jsSetupAsync = function() {
+    var defaultDefinitions = lookAndFeelDefinitions[0];
     preloadSound(defaultDefinitions.audioFile);
 }

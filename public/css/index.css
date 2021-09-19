@@ -9,12 +9,11 @@
 @media (min-width: 1024px) {
     #upper .selector { display: none; }
     #inner .selector { display: block; }
+    #inner .column:nth-of-type(1), #inner .column:nth-of-type(3) { width: 100px; }
+    #inner .column:nth-of-type(3) { margin-top: -100px; }
 }
 
 /* #inner .column:nth-of-type(3) */
-#inner .column:nth-of-type(1),
-#inner .column:nth-of-type(3) { width: 100px; }
-#inner .column:nth-of-type(3) { margin-top: -100px; }
 #inner .selector .btn-looknfeel { display: flex; flex-direction: column; width: 100px; height: 70px; margin: 10px; object-fit: cover; }
 
 /* BREATHE ============================================================== */
